@@ -6,7 +6,8 @@ from item import Item
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     [Item('Backpack', 'Empty and tattered but maybe it can be useful in the cave'), Item('Lamp', 'Shattered but maybe it can be rapaired with some tools')]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -51,7 +52,7 @@ options = ["n", "e", "s", "w", "q"]
 # If the user enters "q", quit the game.
 
 while game:
-    print(f"\nYour position: {player1.current_room.name} \n")
+    print(player1.current_room)
     user = input("In which direction do you want to go?\n\n[n] North [e] East [s] South [w] West [q] Quit\n\n")
     if user == "q":
         print("\nWe hope you had fun\n")
