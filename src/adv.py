@@ -45,27 +45,22 @@ player1 = Player("KingLouie", room["outside"])
 options = ["n", "e", "s", "w", "q"]
 
 # Write a loop that:
-#
-# * Prints the current room name
-while game:
-# * Prints the current description (the textwrap module might be useful here).
-    print(f"\nYour position: {player1.current_room.name} \n")
-# * Waits for user input and decides what to do.
-    user = input("In which direction do you want to go?\n\n[n] North [e] East [s] South [w] West [q] Quit\n\n")
 # If the user enters a cardinal direction, attempt to move to the room there.
-    if user == "n":
-        player1.current_room = player1.current_room.n_to
-    elif user == "e":
-        player1.current_room = player1.current_room.e_to
-    elif user == "s":
-        player1.current_room = player1.current_room.s_to
-    elif user == "w":
-        player1.current_room = player1.current_room.w_to
-    
 # Print an error message if the movement isn't allowed.
+# If the user enters "q", quit the game.
+
+while game:
+    print(f"\nYour position: {player1.current_room.name} \n")
+    user = input("In which direction do you want to go?\n\n[n] North [e] East [s] South [w] West [q] Quit\n\n")
+    if user == "q":
+        print("\nWe hope you had fun\n")
+        game = False    
     elif user not in options:
         print("Please choose one of the directions or quit the game\n")
-# If the user enters "q", quit the game.
-    elif user == "q":
-        print("\nWe hope you had fun\n")
-        game = False
+    else: 
+        user += "_to"
+        if getattr(player1.current_room, user) == None:
+            print("\nThere is no room where you want to go\nPlease choose another direction!")
+        else:
+            player1.current_room = getattr(player1.current_room, user)    
+    
