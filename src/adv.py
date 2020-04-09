@@ -39,12 +39,10 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
-game = True
-
-# Make a new player object that is currently in the 'outside' room.
 player1 = Player("KingLouie", room["outside"])
-options = ["n", "e", "s", "w", "q"]
+game = True
+options1 = ["n", "e", "s", "w"]
+# Make a new player object that is currently in the 'outside' room.
 
 # Write a loop that:
 # If the user enters a cardinal direction, attempt to move to the room there.
@@ -53,16 +51,41 @@ options = ["n", "e", "s", "w", "q"]
 
 while game:
     print(player1.current_room)
-    user = input("In which direction do you want to go?\n\n[n] North [e] East [s] South [w] West [q] Quit\n\n")
-    if user == "q":
-        print("\nWe hope you had fun\n")
-        game = False    
-    elif user not in options:
-        print("Please choose one of the directions or quit the game\n")
-    else: 
-        user += "_to"
-        if getattr(player1.current_room, user) == None:
-            print("\nThere is no room where you want to go\nPlease choose another direction!")
-        else:
-            player1.current_room = getattr(player1.current_room, user)    
+    print(player1)
     
+    action = input("\nWhat do you want to do now? - [move] to move [take] to take an item [drop] to drop an item [q] to quit game\n\n")
+    if action == "q":
+            print("\nWe hope you had fun\n")
+            game = False
+    elif action == "take":
+        if len(player1.current_room.items) == 0:
+            print("\n***There are no items in the room you can take***")
+        else:
+            item_to_take = input("\nWhich item do you want to take?\n")
+        for e in player1.current_room.items:
+            if item_to_take == e.name:
+                setattr(player1, "inventory", [*player1.inventory, e])
+                player1.current_room.items.remove(e)
+                e.took_item()
+    elif action == "drop":
+        if len(player1.inventory) == 0:
+            print("\n***Your inventory is empty - you can't drop an item***")
+        else:
+            item_to_drop = input("\nWhich item do you want to drop?\n")
+        for e in player1.inventory:
+            if item_to_drop == e.name:
+                setattr(player1.current_room, "items", [*player1.current_room.items, e])
+                player1.inventory.remove(e)
+                e.dropped_item()
+    elif action == "move":
+        move = input("\nIn which direction do you want to go? - [n] North [e] East [s] South [w] West\n\n")
+        if move not in options1:
+            print("\nPlease choose one of the directions\n")
+        else: 
+            move += "_to"
+            if getattr(player1.current_room, move) == None:
+                print("\n***There is no room where you want to go - Please choose another direction***")
+            else:
+                player1.current_room = getattr(player1.current_room, move)    
+    else:
+        print("Please choose between the possible options or quit the game") 

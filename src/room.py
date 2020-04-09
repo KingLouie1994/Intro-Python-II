@@ -19,7 +19,7 @@ class Room:
         if len(self.items) == 0:
             output += f"\nNo items here - This room is empty!\n"
         else:
-            output += "\nItems in the room:\n"
+            output += "\nItems here:\n"
             for e in self.items:
                 output += f"{itemNumber}. {e.name} - {e.description}\n"
                 itemNumber += 1
