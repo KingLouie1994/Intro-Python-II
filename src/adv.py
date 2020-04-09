@@ -49,11 +49,13 @@ options1 = ["n", "e", "s", "w"]
 # Print an error message if the movement isn't allowed.
 # If the user enters "q", quit the game.
 
+
 while game:
+    
     print(player1.current_room)
     print(player1)
-    
-    action = input("\nWhat do you want to do now? - [move] to move [take] to take an item [drop] to drop an item [q] to quit game\n\n")
+
+    action = input("\nWhat do you want to do now? - [move] to move [take] to take an item \n[drop] to drop an item [i] to see your inventory [q] to quit game\n\n")
     if action == "q":
             print("\nWe hope you had fun\n")
             game = False
@@ -87,5 +89,10 @@ while game:
                 print("\n***There is no room where you want to go - Please choose another direction***")
             else:
                 player1.current_room = getattr(player1.current_room, move)    
+    elif action == "i":
+        if len(player1.inventory) == 0:
+            print("\n***Your inventory is empty***")
+        else:
+            player1.show_inv()
     else:
-        print("Please choose between the possible options or quit the game") 
+        print("\n***Please choose between the possible options or quit the game***") 

@@ -10,8 +10,12 @@ class Player:
     def __str__(self):
         output = ""
         output += f"You,{self.name}, have {len(self.inventory)} items in your inventory"
+        return output
+
+    def show_inv(self):
+        inv = "\nYour invetory:\n"
         inventoryNumber = 1
         for e in self.inventory:
-            output += f"{inventoryNumber}. {e.name} - {e.description}"
+            inv += f"\n{inventoryNumber}. {e.name} - {e.description}"
             inventoryNumber += 1
-        return output
+        print(inv)
